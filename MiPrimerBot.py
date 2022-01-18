@@ -1,15 +1,18 @@
 import logging
-from telegram.constants import CHATACTION_UPLOAD_DOCUMENT
+#from telegram.constants import CHATACTION_UPLOAD_DOCUMENT
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters
 from telegram import Update
+
+from constantes import CYBERMITOTOKEN
 #from telegram.ext import CallbackContext
 #from telegram.ext import CommandHandler
 
-TOKEN = 'TOKENCYBERMITOBOT'
+#TOKEN = CYBERMITOTOKEN#Poner el Token en un archivo independiente que no
+#se suba a github, metiendo el archivo en el .gitignore.
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-updater = Updater(token=TOKEN, use_context=True)
+updater = Updater(token=CYBERMITOTOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
 def start(update: Update, context: CallbackContext):
@@ -23,7 +26,10 @@ def echo(update: Update, context: CallbackContext):
 
 def caps(update: Update, context: CallbackContext):
     text_caps =' '. join(context.args).upper()
-    context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
+    if text_caps == 'HOLA' or  text_caps == '¿QUÉ TAL?':
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Hola, soy bot")
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
 
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
