@@ -2,6 +2,9 @@ import logging
 #from telegram.constants import CHATACTION_UPLOAD_DOCUMENT
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters
 from telegram import Update
+#Añadimos clases para el modo inline.
+from telegram import InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext import InlineQueryHandler
 
 from constantes import CYBERMITOTOKEN
 #from telegram.ext import CallbackContext
@@ -31,6 +34,22 @@ def caps(update: Update, context: CallbackContext):
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
 
+#definimos una función para tratar el modo inline.
+def inline_caps(update: Update, context: CallbackContext):
+    query = update.inline_query.query
+    if not query:
+        return
+    results = []
+    results.append(
+        InlineQueryResultArticle(
+            id=query.upper(),
+            title="Caps",
+            input_message_content=InputTextMessageContent(query.upper())
+
+        )
+    )
+    context.bot.answer_inline_query(update.inline_query.id, results )
+
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
 
@@ -42,5 +61,8 @@ dispatcher.add_handler(echo_handler)
 
 caps_handler = CommandHandler('caps', caps)
 dispatcher.add_handler(caps_handler)
+
+inline_caps_handler = InlineQueryHandler(inline_caps)
+dispatcher.add_handler(inline_caps_handler)
 
 updater.start_polling()
