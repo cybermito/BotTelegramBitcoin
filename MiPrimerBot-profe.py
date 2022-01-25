@@ -37,6 +37,19 @@ dispatcher = updater.dispatcher #Creamos el dispatcher para un acceso más rapid
 
 
 #Definimos las funciones que se ejecutarán según el comando/handler creado. 
+#Un handler es una instancia derivada de la clase telegram.ext.Handler.
+#La estructura es la siguiente:
+''' Definir una función que respondera o será utilizada como Callback a las actualizaciones
+que recibamos desde Telegram, un mensaje, un audio, un gif, etc.
+Ejemplo: 
+def start_callback(update, context):
+    update.message.reply_text("Bienvenido a este entretenido bot")
+
+después crearemos el handler en si para que se genere la respuesta a un comando, en
+este caso /start
+
+dispatcher.add_handler(commandHandler("start", start_callback))
+'''
 def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Hola, soy un bot, por favor habla conmigo")
 

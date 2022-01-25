@@ -127,6 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Personalizado
 constantes.py
 telegram_bot_2021/constantes.py
 Constants.py

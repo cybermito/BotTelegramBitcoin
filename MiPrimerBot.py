@@ -34,7 +34,9 @@ def caps(update: Update, context: CallbackContext):
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
 
-#definimos una función para tratar el modo inline.
+#definimos una función para tratar el modo inline. Ver más información en la documentación del módulo
+#Aquí hay que definir que es lo que queremos mostrar cuando nos lo soliciten desde
+#cualquier chat. Ver documentación módulo y API Telegram. 
 def inline_caps(update: Update, context: CallbackContext):
     query = update.inline_query.query
     if not query:
@@ -49,6 +51,14 @@ def inline_caps(update: Update, context: CallbackContext):
         )
     )
     context.bot.answer_inline_query(update.inline_query.id, results )
+
+#Con esta función creamos un handler al final del programa para que responda cuando el comando no exista. 
+def unknown(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Lo siento, ese comando no está activo")
+
+def parada(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Voy a proceder a desconectarme, hasta pronto")
+    updater.stop()
 
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
@@ -65,4 +75,12 @@ dispatcher.add_handler(caps_handler)
 inline_caps_handler = InlineQueryHandler(inline_caps)
 dispatcher.add_handler(inline_caps_handler)
 
+parada_handler = CommandHandler('stop', parada)
+dispatcher.add_handler(parada_handler)
+
+unknown_handler = MessageHandler(Filters.command, unknown)
+dispatcher.add_handler(unknown_handler)
+
 updater.start_polling()
+updater.idle()
+
