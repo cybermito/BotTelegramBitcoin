@@ -3,7 +3,6 @@ import re #Este módulo permite encontrar símbolos ($%;-...) en una cadena de c
 def process_message(message, response_array, response):
     #Dividimos el mensaje y la puntuación del mensaje dentro de una lista.
     list_message = re.findall(r"[\w']+|[.,¡!¿?;]", message.lower())
-
     #Puntuamos el número de coincidencias en las palabras del mensaje para después
     #devolver una respuesta. 
 

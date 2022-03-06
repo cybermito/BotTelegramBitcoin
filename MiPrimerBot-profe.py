@@ -1,3 +1,4 @@
+from dis import dis
 import logging
 from telegram.constants import CHATACTION_UPLOAD_DOCUMENT
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters
@@ -34,6 +35,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 """
 updater = Updater(token=CYBERMITOTOKEN, use_context=True) #Creamos el objeto Updater
 dispatcher = updater.dispatcher #Creamos el dispatcher para un acceso más rapido.
+print(updater)
+print()
+print(dispatcher)
+print()
 
 
 #Definimos las funciones que se ejecutarán según el comando/handler creado. 
@@ -76,3 +81,4 @@ caps_handler = CommandHandler('caps', caps)
 dispatcher.add_handler(caps_handler)
 
 updater.start_polling()
+updater.idle()

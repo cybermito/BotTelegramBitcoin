@@ -18,7 +18,10 @@ dispatcher = updater.dispatcher
 def start(update, context): #Este callback permite argumentos múltiples
     #print(update)
     print(update.message.text)
+    print()
+    print(context.args)
     mensaje_usuario = " ".join(context.args)
+
     update.message.reply_text ("Has dicho: " + mensaje_usuario)
 
 def respuesta(update, context):
